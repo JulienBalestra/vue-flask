@@ -1,0 +1,5 @@
+*.pyc
+/env/
+/.idea/
+/vue-flask.iml
+/app/static/node_modules/

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+
+    <script src="static/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <title>Vue Flask</title>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <a class="navbar-brand" href="#">
+                    <span>
+                        <img style="display: inline-block; height: 40px; margin-top: -10px"
+                             src="static/media/flask.png">
+                    </span>
+                </a>
+            </div>
+
+            <div class="col-md-4"><h1>Vue Flask</h1></div>
+
+            <div class="col-md-4">
+                    <span>
+                        <img style="display: inline-block; height: 40px; margin-top: 5px"
+                             src="static/media/vuejs.png">
+                    </span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#pane-zero" aria-controls="zero" role="tab" data-toggle="tab">Home</a>
+        </li>
+        <li role="presentation">
+            <a href="#pane-one" aria-controls="one" role="tab" data-toggle="tab">One</a>
+        </li>
+        <li role="presentation">
+            <a href="#pane-two" aria-controls="two" role="tab" data-toggle="tab">Two</a>
+        </li>
+
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content" style="margin-top: 10px">
+        <div role="tabpanel" class="tab-pane fade in active" id="pane-zero">
+            <div class="col-md-6">
+                <p>Hello Home</p>
+            </div>
+            <div class="col-md-6"></div>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="pane-one">
+            <div id="app-one">
+                <div>
+                    <one-list v-for="item in one_list" v-bind:item="item"></one-list>
+                </div>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="pane-two">
+            <div id="app-two">
+                <ol>
+                    <li v-for="item in two_list">
+                        {% raw %}{{ item }}{% endraw %}
+                    </li>
+                </ol>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<template id="template-one">
+    <div class="row" style="margin-bottom: 2px">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            {% raw %}
+            <p style="margin-bottom: 2px">{{ item }}</p>
+            {% endraw %}
+        </div>
+    </div>
+</template>
+
+
+<script src="static/node_modules/vue/dist/vue.link.js"></script>
+<script src="static/node_modules/vue-resource/dist/vue-resource.min.js"></script>
+<script src="static/js/app.js"></script>
+
+</html>

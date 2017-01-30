@@ -1,0 +1,10 @@
+{
+  "name": "vue-flask",
+  "version": "1.0.0",
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "2.2.0",
+    "vue": "2.1.10",
+    "vue-resource": "1.0.3"
+  }
+}
