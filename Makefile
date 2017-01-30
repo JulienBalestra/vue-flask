@@ -21,3 +21,6 @@ prod:
 
 check:
 	PYTHONPATH=$(CWD) $(ENV)/bin/python -m unittest discover app/
+
+run: $(ENV) prod
+	$(ENV)/bin/gunicorn --chdir app api:app --log-level debug
