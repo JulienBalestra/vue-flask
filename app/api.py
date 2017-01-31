@@ -17,7 +17,7 @@ def one():
     o = cache.get("one")
     if not o:
         o = {"one": [k for k in range(10)]}
-        cache.set("one", o)
+        cache.set("one", o, timeout=30)
     return jsonify(o)
 
 

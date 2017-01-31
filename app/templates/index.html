@@ -42,7 +42,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
-            <a href="#pane-zero" aria-controls="zero" role="tab" data-toggle="tab">Home</a>
+            <a href="#pane-zero" aria-controls="zero" role="tab" data-toggle="tab">Zero</a>
         </li>
         <li role="presentation">
             <a href="#pane-one" aria-controls="one" role="tab" data-toggle="tab">One</a>
@@ -57,7 +57,11 @@
     <div class="tab-content" style="margin-top: 10px">
         <div role="tabpanel" class="tab-pane fade in active" id="pane-zero">
             <div class="col-md-6">
-                <p>Hello Home</p>
+                <div id="app-zero">
+                  <span v-bind:ts="ts">
+                        Side server timestamp: {% raw %}{{ ts }}{% endraw %}
+                  </span>
+                </div>
             </div>
             <div class="col-md-6"></div>
 

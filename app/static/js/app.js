@@ -3,6 +3,27 @@ Vue.component('one-list', {
     template: '#template-one'
 });
 
+var app_zero = new Vue({
+    el: '#app-zero',
+    data: {
+        ts: {}
+    },
+    methods: {
+        fetchData: function () {
+            this.$http.get('/api/ts')
+                .then(function (response) {
+                    this.ts = response.data.now;
+                }, function (err) {
+                    console.log(err);
+                });
+        }
+    },
+    mounted: function () {
+        setInterval(this.fetchData,
+        1000);
+    }
+});
+
 var app_one = new Vue({
     el: '#app-one',
     data: {
