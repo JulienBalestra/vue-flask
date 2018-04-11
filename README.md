@@ -1,6 +1,6 @@
 # Vue-Flask
 
-Quick web Dashboard / REST API
+Quick web Dashboard / REST API with Prometheus monitoring
 
 
 
@@ -25,6 +25,7 @@ Quick web Dashboard / REST API
 * npm
 * python3
 * virtualenv
+* docker (optional)
 
 
 #### Setup
@@ -42,17 +43,28 @@ Quick web Dashboard / REST API
     
     make run
     
+
+#### Build and run the docker container
+
+    make image
+    docker run -it --rm vue-flask:latest
+    
+#### Observe prometheus metrics
+
+    curl http://${endpoint}/metrics
     
 ### Structure
     
     
     tree
     .
+    |-- Dockerfile
     |-- Makefile
     |-- README.md
     |-- app
     |   |-- __init__.py
     |   |-- api.py
+    |   |-- monitoring.py
     |   |-- static
     |   |   |-- Makefile
     |   |   |-- css
