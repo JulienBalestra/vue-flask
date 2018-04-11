@@ -1,10 +1,15 @@
 import time
+
+import os
+
+from app import monitoring
 from flask import Flask, jsonify
 from flask import render_template
-from werkzeug.contrib.cache import SimpleCache
+from werkzeug.contrib.cache import FileSystemCache
 
 app = application = Flask("VueFlask")
-cache = SimpleCache()
+monitoring.monitor_flask(app)
+cache = FileSystemCache(os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache"))
 
 
 @app.route("/")
@@ -23,30 +28,24 @@ def one():
 
 @app.route("/api/two")
 def two():
-    return jsonify(
-        {
-            "two": [k for k in range(10, 20)]
-        }
-    )
+    return jsonify({
+        "two": [k for k in range(10, 20)]
+    })
 
 
 @app.route("/healthz")
 def healthz():
-    return jsonify(
-        {
-            "flask": True,
-            "global": True
-        }
-    )
+    return jsonify({
+        "flask": True,
+        "global": True
+    })
 
 
 @app.route("/api/ts")
 def ts():
-    return jsonify(
-        {
-            "now": time.time()
-        }
-    )
+    return jsonify({
+        "now": time.time()
+    })
 
 
 if __name__ == '__main__':
