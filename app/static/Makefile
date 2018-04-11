@@ -33,13 +33,13 @@ prod: npm clean
 
 clean:
 	for PKGE in $(NPM_PACKAGES_JS); do \
-		rm -v $$PKGE.link.js || true ; \
+		$(RM) -v $$PKGE.link.js; \
 	done
 	for PKGE in $(NPM_PACKAGES_CSS); do \
-		rm -v $$PKGE.link.css || true ; \
+		$(RM) -v $$PKGE.link.css ; \
 	done
 
-fclean:
-	rm -rfv $(NODE)
+fclean: clean
+	$(RM) -Rfv $(NODE)
 
 re: fclean npm
