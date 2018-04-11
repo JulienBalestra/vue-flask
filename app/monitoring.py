@@ -23,6 +23,13 @@ def monitor_flask(app: Flask):
     :param app: Flask application
     :return:
     """
+    prometheus_state_dir = os.getenv('prometheus_multiproc_dir', "")
+    if "gunicorn" not in os.getenv("SERVER_SOFTWARE", "") and not prometheus_state_dir:
+        return
+
+    if os.path.isdir(prometheus_state_dir) is False:
+        os.mkdir(prometheus_state_dir)
+
     metrics = CollectorRegistry()
 
     def collect():
@@ -30,13 +37,6 @@ def monitor_flask(app: Flask):
         multiprocess.MultiProcessCollector(registry)
         data = generate_latest(registry)
         return Response(data, mimetype=CONTENT_TYPE_LATEST)
-
-    prometheus_state_dir = os.getenv('prometheus_multiproc_dir', "")
-    if "gunicorn" not in os.getenv("SERVER_SOFTWARE", "") and not prometheus_state_dir:
-        return
-
-    if os.path.isdir(prometheus_state_dir) is False:
-        os.mkdir(prometheus_state_dir)
 
     app.add_url_rule('/metrics', 'metrics', collect)
 
