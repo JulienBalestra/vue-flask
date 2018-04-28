@@ -23,8 +23,9 @@ def monitor_flask(app: Flask):
     :param app: Flask application
     :return:
     """
+    # prometheus_state_dir should be defined in envvar
     prometheus_state_dir = os.getenv('prometheus_multiproc_dir', "")
-    if "gunicorn" not in os.getenv("SERVER_SOFTWARE", "") and not prometheus_state_dir:
+    if "gunicorn" not in os.getenv("SERVER_SOFTWARE", "") and prometheus_state_dir == "":
         return
 
     if os.path.isdir(prometheus_state_dir) is False:
@@ -49,21 +50,15 @@ def monitor_flask(app: Flask):
         ['method', 'path'],
         **additional_kwargs
     )
-    request_count = Counter(
-        'request_total',
-        'Backend API request count',
-        ['method', 'path'],
-        **additional_kwargs
-    )
     status_count = Counter(
         'responses_total',
         'Backend API response count',
         ['method', 'path', 'status_code'],
         **additional_kwargs
     )
-    exception_count = Counter(
-        'exceptions_total',
-        'Backend API top-level exception count',
+    exception_latency = Histogram(
+        'exceptions_duration_seconds',
+        'Backend API top-level exception latency',
         ['method', 'path', 'type'],
         **additional_kwargs
     )
@@ -71,7 +66,6 @@ def monitor_flask(app: Flask):
     @app.before_request
     def start_measure():
         g._start_time = time.time()
-        request_count.labels(request.method, request.url_rule).inc()
 
     @app.after_request
     def count_status(response: Response):
@@ -82,7 +76,7 @@ def monitor_flask(app: Flask):
     # Override log_exception to increment the exception counter
     def log_exception(exc_info):
         class_name = extract_exception_name(exc_info)
-        exception_count.labels(request.method, request.url_rule, class_name).inc()
+        exception_latency.labels(request.method, request.url_rule, class_name).observe(time.time() - g._start_time)
         app.logger.error('Exception on %s [%s]' % (
             request.path,
             request.method

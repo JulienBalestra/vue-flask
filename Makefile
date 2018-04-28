@@ -25,4 +25,4 @@ run: $(ENV) prod
 	prometheus_multiproc_dir=$(MONITORING_STATE) $(ENV)/bin/gunicorn --chdir app api:app --log-level debug --pythonpath $(CWD)
 
 image:
-	docker build -t vue-flask:latest .
+	docker build -t julienbalestra/vue-flask:latest .
