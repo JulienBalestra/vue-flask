@@ -46,8 +46,8 @@ Quick web Dashboard / REST API with Prometheus monitoring
 
 #### Build and run the docker container
 
-    make image
-    docker run -it --rm vue-flask:latest
+    make image # optional
+    docker run -it --rm julienbalestra/vue-flask:latest
     
 #### Observe prometheus metrics
 
